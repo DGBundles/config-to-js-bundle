@@ -11,8 +11,9 @@ namespace Dawen\Bundle\ConfigToJsBundle\Tests\Component;
 use Dawen\Bundle\ConfigToJsBundle\Component\ConfigDumper;
 use Dawen\Bundle\ConfigToJsBundle\Component\ConfigDumperException;
 use Dawen\Bundle\ConfigToJsBundle\Component\ConfigDumperInterface;
+use PHPUnit\Framework\TestCase;
 
-class ConfigDumperTest extends \PHPUnit_Framework_TestCase
+class ConfigDumperTest extends TestCase
 {
     const OUTPUT_PATH = 'my-path/file.js';
     const TYPE = 'module';
@@ -125,7 +126,7 @@ class ConfigDumperTest extends \PHPUnit_Framework_TestCase
         $this->renderer->expects($this->exactly(2))->method('getName')->willReturn(self::TYPE);
 
         $message = 'A renderer with the name "' . self::TYPE . '" is already registered';
-        $this->setExpectedException(ConfigDumperException::class, $message);
+        $this->expectException(ConfigDumperException::class, $message);
 
         $this->dumper->registerRenderer($this->renderer);
         $this->dumper->registerRenderer($this->renderer);
@@ -134,7 +135,7 @@ class ConfigDumperTest extends \PHPUnit_Framework_TestCase
     public function testDumpNotExistingRendererException()
     {
         $message = 'A renderer with the name "' . self::TYPE . '" is not registered';
-        $this->setExpectedException(ConfigDumperException::class, $message);
+        $this->expectException(ConfigDumperException::class, $message);
 
         $this->dumper->dump();
     }
@@ -144,7 +145,7 @@ class ConfigDumperTest extends \PHPUnit_Framework_TestCase
         $this->renderer->expects($this->never())->method('getName')->willReturn(self::TYPE);
 
         $message = 'It does not make sense to dump an empty config';
-        $this->setExpectedException(ConfigDumperException::class, $message);
+        $this->expectException(ConfigDumperException::class, $message);
 
         $this->dumper->setConfig([]);
         $this->dumper->dump();

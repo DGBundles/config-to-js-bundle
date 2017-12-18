@@ -9,8 +9,9 @@
 namespace Dawen\Bundle\ConfigToJsBundle\Tests\Command;
 
 use Dawen\Bundle\ConfigToJsBundle\Command\JsConfigDumpCommand;
+use PHPUnit\Framework\TestCase;
 
-class JsConfigDumpCommandTest extends \PHPUnit_Framework_TestCase
+class JsConfigDumpCommandTest extends TestCase
 {
 
     public function testDump()

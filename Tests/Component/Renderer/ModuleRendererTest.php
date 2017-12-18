@@ -9,8 +9,9 @@
 namespace Dawen\Bundle\ConfigToJsBundle\Tests\Component\Renderer;
 
 use Dawen\Bundle\ConfigToJsBundle\Component\Renderer\ModuleRenderer;
+use PHPUnit\Framework\TestCase;
 
-class ModuleRendererTest extends \PHPUnit_Framework_TestCase
+class ModuleRendererTest extends TestCase
 {
     public function testGetName()
     {
