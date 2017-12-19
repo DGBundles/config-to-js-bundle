@@ -8,16 +8,38 @@
 
 namespace Dawen\Bundle\ConfigToJsBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Dawen\Bundle\ConfigToJsBundle\Component\ConfigDumperInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class JsConfigDumpCommand extends ContainerAwareCommand
+class JsConfigDumpCommand extends Command
 {
     /**
-     * @see Command
+     * @var ConfigDumperInterface
      */
-    protected function configure()
+    private $dumper;
+
+    /**
+     * JsConfigDumpCommand constructor.
+     *
+     * @param ConfigDumperInterface $dumper
+     *
+     * @throws \Symfony\Component\Console\Exception\LogicException
+     */
+    public function __construct(ConfigDumperInterface $dumper)
+    {
+        parent::__construct();
+
+        $this->dumper = $dumper;
+    }
+
+    /**
+     * @see Command
+     *
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     */
+    protected function configure(): void
     {
         $this
             ->setName('config:js:dump')
@@ -26,16 +48,18 @@ class JsConfigDumpCommand extends ContainerAwareCommand
 
     /**
      * @see Command
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
+     *
+     * @throws \Dawen\Bundle\ConfigToJsBundle\Component\ConfigDumperException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dumper = $this->getContainer()->get('config_to_js.dumper');
+        $this->dumper->dump();
 
-        $dumper->dump();
-
-        $output->writeln('Dumped config to ' . $dumper->getOutputPath());
+        $output->writeln('Dumped config to ' . $this->dumper->getOutputPath());
     }
 }

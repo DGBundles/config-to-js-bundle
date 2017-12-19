@@ -5,16 +5,8 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="config_to_js.filesystem" class="Symfony\Component\Filesystem\Filesystem" public="false"/>
+        <defaults autowire="true" autoconfigure="true" public="false" />
 
-        <service id="config_to_js.dumper" class="Dawen\Bundle\ConfigToJsBundle\Component\ConfigDumper">
-
-            <call method="registerRenderer">
-                <argument type="service" id="config_to_js.renderer.module"/>
-            </call>
-        </service>
-
-        <service id="config_to_js.renderer.module" class="Dawen\Bundle\ConfigToJsBundle\Component\Renderer\ModuleRenderer"/>
-
+        <prototype namespace="Dawen\Bundle\ConfigToJsBundle\" resource="../../{Component,Command}/*" />
     </services>
 </container>
